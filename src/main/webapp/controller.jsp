@@ -26,6 +26,10 @@
 			response.sendRedirect("login.jsp");
 		}
 	}
+	else if(action.equals("logout")){
+		session.invalidate();
+		response.sendRedirect("login.jsp");
+	}
 	else if(action.equals("reg")){
 		if(mDAO.insert(mVO)){
 			response.sendRedirect("login.jsp");
@@ -45,10 +49,14 @@
 			throw new Exception("mypage 오류");
 		}
 	}
+	// mypage를 controller에서 다룰 때
+	// session이 모든 member 정보를 가지면 보안에 취약하고 무거워져 품질 저하가 일어나기 때문에,
+	// flag변수 또는 1~2가지의 간단한 정보만 취급함
+	// -> (일반적으로)mypage에서는 session정보를 이용할 수 없음
 	else if(action.equals("mupdate")){
 		if(mDAO.update(mVO)){
-			session.invalidate(); // 세션 정보 전체 제거하기
-			 /// session.removeAttribute("member");
+			session.invalidate(); // 세션 정보 전체 제거
+			// session.removeAttribute("xxx"); // 세션 정보 타겟팅 제거
 			response.sendRedirect("login.jsp");
 		}
 		else{
@@ -60,7 +68,7 @@
 		if(member!=null && mDAO.delete(member)){
 			session.invalidate();
 			response.sendRedirect("login.jsp");
-		}
+		}                                                                                                                     
 		else{
 			throw new Exception("mdelete 오류");
 		}
@@ -68,7 +76,7 @@
 	else if(action.equals("main")){
 		ArrayList<BoardVO> datas=bDAO.selectAll(bVO);
 		request.setAttribute("datas", datas);
-		pageContext.forward("main.jsp"); // forward 액션
+		pageContext.forward("main.jsp");
 	}
 	else if(action.equals("board")){
 		BoardVO data=bDAO.selectOne(bVO);

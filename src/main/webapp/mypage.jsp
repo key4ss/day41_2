@@ -9,7 +9,8 @@
 </head>
 <body>
 
-<form action="controller.jsp?action=mupdate" method="post">
+<form action="controller.jsp?" method="post">
+<input type="hidden" name="action" value="mupdate">
 	<table border="1">
 		<tr>
 			<td>아이디</td>

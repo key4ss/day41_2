@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<form action="controller.jsp?action=login" method="post">
+<form action="controller.jsp" method="post">
+<input type="hidden" name="action" value="login">
 	<table border="1">
 		<tr>
 			<td>아이디</td>
@@ -26,7 +27,8 @@
 	</table>
 </form>
 <hr>
-<a href="reg.jsp">회원가입하기</a>
+<a href="reg.jsp">회원가입하기</a><br>
+<a href="controller.jsp?action=main">메인으로 돌아가기</a>
 
 </body>
 </html>

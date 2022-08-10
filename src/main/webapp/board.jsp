@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="data" class="model.vo.BoardVO" scope="request" />
+<jsp:useBean id="member" class="model.vo.MemberVO" scope="session" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,11 +38,20 @@
 			<td>작성자</td>
 			<td><input type="text" name="writer" value="<%=data.getWriter()%>" required readonly></td>
 		</tr>
+	<%
+		if(member.getMid() != null){ //member가 null인것이 아닌 member의 role이나 mid가 null일때 에러 발생
+			if(member.getRole().equals("ADMIN") || member.getMid().equals(data.getWriter())){
+	%>
 		<tr>
 			<td colspan="2" align="right">
-				<input type="submit" value="변경하기">&nbsp;<input type="button" value="삭제하기" onClick="del()">
+				<input type="submit" value="변경하기">&nbsp;
+				<input type="button" value="삭제하기" onClick="del()">
 			</td>
 		</tr>
+	<%
+			}
+		}
+	%>
 	</table>
 </form>
 <hr>

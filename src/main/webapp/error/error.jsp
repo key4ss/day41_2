@@ -8,10 +8,11 @@
 </head>
 <body>
 
-<h1>에러가 발생했습니다...</h1>
-<%=exception%> <br><br>
+
 <img alt="일러스트" src="./images/pic.jpg">
 <hr>
+<h1>에러가 발생했습니다...</h1>
+<%=exception%> <br><br>
 <a href="main.jsp">메인으로 돌아가기</a>
 
 </body>

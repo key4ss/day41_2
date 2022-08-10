@@ -13,10 +13,13 @@ public class BoardDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	final String sql_selectOne="SELECT * FROM BOARD WHERE BID=?";
-	final String sql_selectAll="SELECT * FROM BOARD ORDER BY BID DESC";
-	final String sql_insert="INSERT INTO BOARD VALUES((SELECT NVL(MAX(BID),0)+1 FROM BOARD)";
+	//final String sql_selectAll="SELECT * FROM BOARD ORDER BY BID DESC";
+	final String sql_selectAllT="SELECT * FROM BOARD WHERE TITLE LIKE '%'||?||'%' ORDER BY BID DESC";
+	final String sql_selectAllW="SELECT * FROM BOARD WHERE WRITER LIKE '%'||?||'%' ORDER BY BID DESC";
+	final String sql_insert="INSERT INTO BOARD VALUES((SELECT NVL(MAX(BID),0)+1 FROM BOARD),?,?,?)";
 	final String sql_update="UPDATE BOARD SET TITLE=?,CONTENT=? WHERE BID=?";
 	final String sql_delete="DELETE FROM BOARD WHERE BID=?";
+	
 	public BoardVO selectOne(BoardVO vo) {
 		conn=JDBCUtil.connect();
 		try {
@@ -43,7 +46,18 @@ public class BoardDAO {
 		ArrayList<BoardVO> datas=new ArrayList<BoardVO>();
 		conn=JDBCUtil.connect();
 		try {
+			if(vo.getSearchType()==null) { //검색조건x 경우
+				vo.setSearchType("TITLE");
+			}
+			if(vo.getSearchContent()==null) {//검색내용x 경우
+				vo.setSearchContent("");
+			}
+			String sql_selectAll=sql_selectAllT;
+			if(vo.getSearchType().equals("WRITER")) {
+				sql_selectAll=sql_selectAllW;
+			}
 			pstmt=conn.prepareStatement(sql_selectAll);
+			pstmt.setString(1, vo.getSearchContent());
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
 				BoardVO data=new BoardVO();
