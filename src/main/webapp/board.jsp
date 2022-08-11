@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <jsp:useBean id="data" class="model.vo.BoardVO" scope="request" />
 <jsp:useBean id="member" class="model.vo.MemberVO" scope="session" />
 <!DOCTYPE html>
@@ -36,10 +39,11 @@
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" name="writer" value="<%=data.getWriter()%>" required readonly></td>
-		</tr>
+			<td><input type="text" name="writer" value="<%=data.getWriter()%>" required readonly></td>		</tr>
 	<%
-		if(member.getMid() != null){ //member가 null인것이 아닌 member의 role이나 mid가 null일때 에러 발생
+		if(member.getMid() != null){
+			//로그인을 하지않고 board(상세보기)로 넘어오게 되면
+			// member의 role이나 mid가 null이기때문에 ▼의 조건을 통과하지 못 한다.
 			if(member.getRole().equals("ADMIN") || member.getMid().equals(data.getWriter())){
 	%>
 		<tr>

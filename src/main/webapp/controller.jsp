@@ -43,6 +43,7 @@
 		// 이후에는 selectOne을 통해서 data를 받게될예정
 		if(member!=null){
 			request.setAttribute("data", member);
+			//System.out.println(member);
 			pageContext.forward("mypage.jsp");
 		}
 		else{
@@ -65,10 +66,17 @@
 	}
 	else if(action.equals("mdelete")){
 		MemberVO member=(MemberVO)session.getAttribute("member");
+		ArrayList<BoardVO> datas = bDAO.selectAll(bVO);
 		if(member!=null && mDAO.delete(member)){
+			for(int i=0; i<datas.size(); i++){
+				if(datas.get(i).getWriter().equals(member.getMid())){
+					datas.get(i).setWriter("알수없음");
+					bDAO.updateTwo(datas.get(i));
+				}
+			}
 			session.invalidate();
 			response.sendRedirect("login.jsp");
-		}                                                                                                                     
+		}                           
 		else{
 			throw new Exception("mdelete 오류");
 		}

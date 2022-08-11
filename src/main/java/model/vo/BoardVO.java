@@ -1,5 +1,7 @@
 package model.vo;
 
+import java.sql.Date;
+
 public class BoardVO {
 	private int bid;
 	private String title;
@@ -7,6 +9,7 @@ public class BoardVO {
 	private String writer;
 	private String searchType; // 자동매핑용
 	private String searchContent; // 자동매핑용
+	private String bdate;
 	public int getBid() {
 		return bid;
 	}
@@ -43,8 +46,16 @@ public class BoardVO {
 	public void setSearchContent(String searchContent) {
 		this.searchContent = searchContent;
 	}
+	public String getBdate() {
+		return bdate;
+	}
+	public void setBdate(String bdate) {
+		this.bdate = bdate;
+	}
 	@Override
 	public String toString() {
-		return "BoardVO [bid=" + bid + ", title=" + title + ", content=" + content + ", writer=" + writer + "]";
+		return "BoardVO [bid=" + bid + ", title=" + title + ", content=" + content + ", writer=" + writer
+				+ ", searchType=" + searchType + ", searchContent=" + searchContent + ", bdate=" + bdate + "]";
 	}
+
 }

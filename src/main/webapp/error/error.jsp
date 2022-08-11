@@ -13,7 +13,7 @@
 <hr>
 <h1>에러가 발생했습니다...</h1>
 <%=exception%> <br><br>
-<a href="main.jsp">메인으로 돌아가기</a>
+<a href="index.jsp">메인으로 돌아가기</a>
 
 </body>
 </html>
